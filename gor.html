@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Магазин</title>
+    <link rel="stylesheet" href="styles.css">
+    <style type="text/css">
+        /* Общие стили */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f7f7f7;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    flex-direction: column;
+}
+
+header {
+    position: fixed;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+}
+
+button {
+    cursor: pointer;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: none;
+    background-color: #4CAF50;
+    color: white;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+/* Стили для корзины */
+#cart {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 300px;
+    background-color: white;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    display: none;
+    max-height: 70vh;
+    overflow-y: auto;
+    z-index: 999;
+}
+
+#cart.show {
+    display: block;
+}
+
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.cart-item button {
+    background-color: #ff5733;
+    margin-left: 5px;
+    padding: 5px 10px;
+    font-size: 12px;
+}
+
+.cart-item button:hover {
+    background-color: #e04a23;
+}
+
+#cartFooter {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.close-cart {
+    background-color: red;
+    color: white;
+    padding: 10px 20px;
+    margin-top: 10px;
+    border-radius: 5px;
+}
+
+.close-cart:hover {
+    background-color: darkred;
+}
+
+/* Форма оформления заказа */
+.checkout-form {
+    display: none;
+    background-color: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 400px;
+    margin: 30px auto;
+}
+
+.checkout-form input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.checkout-form button {
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
+
+.checkout-form button:hover {
+    background-color: #218838;
+}
+
+/* Поддержка мобильных устройств */
+@media (max-width: 768px) {
+    #cart {
+        width: 90%;
+        bottom: 0;
+    }
+    #toggleCartBtn {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+    }
+}
+
+    </style>
+</head>
+<body>
+
+<a href="index1.html"> <button class="fixed-button" >Главное Меню</button></a>
+
+ <div class="tab">
+    <div class="container">
+         <ul class="img">
+         <li>
+                <div class="a">
+                    <img width="180px" height="130px" src="kr.jpeg" alt="Крем суп грибной">
+                </div>
+                <p>Крем суп грибной</p>
+                <p class="price" data-price="200">Цена: 230 сом</p>
+                <div class="c">
+                    <button onclick="addToCart('Крем суп грибной', 230)">в корзину</button>
+                </div>
+            </li>
+       <li>
+                <div class="a">
+                    <img width="180px" height="130px" src="tm.jpeg" alt="Томатный куринный">
+                </div>
+                <p>Томатный куринный</p>
+                <p class="price" data-price="200">Цена: 200 сом</p>
+                <div class="c">
+                    <button onclick="addToCart('Томатный куринный', 200)">в корзину</button>
+                </div>
+            </li>
+        <li>
+                <div class="a">
+                    <img width="180px" height="130px" src="sr.jpeg" alt="Сырный суп">
+                </div>
+                <p>Сырный суп </p>
+                <p class="price" data-price="250">Цена: 250 сом</p>
+                <div class="c">
+                    <button onclick="addToCart('Сырный суп', 250)">в корзину</button>
+                </div>
+            </li>
+        <li>
+                <div class="a">
+                    <img width="180px" height="130px" src="shp.jpeg" alt="суп со шпинатом">
+                </div>
+                <p>суп со шпинатом</p>
+                <p class="price" data-price="200">Цена: 200 сом</p>
+                <div class="c">
+                    <button onclick="addToCart('суп со шпинатом', 200)">в корзину</button>
+                </div>
+            </li>
+    </ul>
+    </div>
+    <div class="container">
+    <ul class="img">
+        <li>
+                <div class="a">
+                    <img width="180px" height="130px" src="gyl.jpeg" alt="Суп гуляш">
+                </div>
+                <p>Суп гуляш</p>
+                <p class="price" data-price="250">Цена: 250 сом</p>
+                <div class="c">
+                    <button onclick="addToCart('Суп гуляш', 250)">в корзину</button>
+                </div>
+            </li>
+         <li>
+                <div class="a">
+                    <img width="180px" height="130px" src="fr.jpeg" alt="Суп с фрикадельками">
+                </div>
+                <p>Суп с фрикадельками</p>
+                <p class="price" data-price="250">Цена: 250 сом</p>
+                <div class="c">
+                    <button onclick="addToCart('Суп с фрикадельками', 250)">в корзину</button>
+                </div>
+            </li>
+        <li>
+                <div class="a">
+                    <img width="180px" height="130px" src="gov.jpeg" alt="Рамен с говядиной">
+                </div>
+                <p>Рамен с говядиной</p>
+                <p class="price" data-price="250">Цена: 250 сом</p>
+                <div class="c">
+                    <button onclick="addToCart('Рамен с говядиной', 250)">в корзину</button>
+                </div>
+            </li>
+        <li>
+                <div class="a">
+                    <img width="180px" height="130px" src="kur.jpeg" alt="Раменс курицей">
+                </div>
+                <p>Раменс курицей</p>
+                <p class="price" data-price="230">Цена: 230 сом</p>
+                <div class="c">
+                    <button onclick="addToCart('Раменс курицей', 230)">в корзину</button>
+                </div>
+            </li>
+
+    </ul>
+</div>
+<div class="container">
+    <ul class="img">
+         <li>
+                <div class="a">
+                    <img width="180px" height="130px" src="asor.jpeg" alt="рамен ассорти">
+                </div>
+                <p>рамен ассорти</p>
+                <p class="price" data-price="280">Цена: 280 сом</p>
+                <div class="c">
+                    <button onclick="addToCart('рамен ассорти', 280)">в корзину</button>
+                </div>
+            </li>
+         <li>
+                <div class="a">
+                    <img width="180px" height="130px" src="kre.jpeg" alt="Том ям с креветками
+                    ">
+                </div>
+                <p>Том ям с креветками
+                </p>
+                <p class="price" data-price="400">Цена: 400 сом</p>
+                <div class="c">
+                    <button onclick="addToCart('Том ям с креветками', 400)">в корзину</button>
+                </div>
+            </li>
+        <li>
+                <div class="a">
+                    <img width="180px" height="130px" src="los.jpeg" alt="том ям с лососем">
+                </div>
+                <p>том ям с лососем</p>
+                <p class="price" data-price="400">Цена: 400 сом</p>
+                <div class="c">
+                    <button onclick="addToCart('том ям с лососем', 400)">в корзину</button>
+                </div>
+            </li>
+        <ul class="img">
+            <li>
+                <div class="a">
+                    <img width="180px" height="130px" src="kor.jpeg" alt="том ям с курицей">
+                </div>
+                <p>том ям с курицей</p>
+                <p class="price" data-price="340">Цена: 340 сом</p>
+                <div class="c">
+                    <button onclick="addToCart('том ям с курицей', 340)">в корзину</button>
+                </div>
+            </li>
+    </ul>
+</div>
+
+<div class="container">
+    <ul class="img">
+         <li>
+                <div class="a">
+                    <img width="180px" height="130px" src="vk.jpeg" alt="вок">
+                </div>
+                <p>вок</p>
+                <p class="price" data-price="230">Цена: 230 сом</p>
+                <div class="c">
+                    <button onclick="addToCart('вок', 230)">в корзину</button>
+                </div>
+            </li>
+         <li>
+                <div class="a">
+                    <img width="180px" height="130px" src="sem.jpeg" alt="Фетучини с семгой
+                    ">
+                </div>
+                <p>Фетучини с семгой
+                </p>
+                <p class="price" data-price="450">Цена: 450 сом</p>
+                <div class="c">
+                    <button onclick="addToCart('Фетучини с семгой', 450)">в корзину</button>
+                </div>
+            </li>
+        <li>
+                <div class="a">
+                    <img width="180px" height="130px" src="grip.jpeg" alt="Фетучини с грибами">
+                </div>
+                <p>Фетучини с грибами</p>
+                <p class="price" data-price="350">Цена: 350 сом</p>
+                <div class="c">
+                    <button onclick="addToCart('Фетучини с грибами', 350)">в корзину</button>
+                </div>
+            </li>
+        <ul class="img">
+            <li>
+                <div class="a">
+                    <img width="180px" height="130px" src="lz.jpeg" alt="лазанья">
+                </div>
+                <p>лазанья</p>
+                <p class="price" data-price="390">Цена: 390 сом</p>
+                <div class="c">
+                    <button onclick="addToCart('лазанья', 390)">в корзину</button>
+                </div>
+            </li>
+    </ul>
+</div>
+<div class="container">
+    <ul class="img">
+         <li>
+                <div class="a">
+                    <img width="180px" height="130px" src="ne.jpg" alt="Неаполитанно">
+                </div>
+                <p>Неаполитанно</p>
+                <p class="price" data-price="380">Цена: 380 сом</p>
+                <div class="c">
+                    <button onclick="addToCart('Неаполитанно', 380)">в корзину</button>
+                </div>
+            </li>
+         <li>
+                <div class="a">
+                    <img width="180px" height="130px" src="bol.jpg" alt="Болоньезе
+                    ">
+                </div>
+                <p>Болоньезе
+                </p>
+                <p class="price" data-price="380">Цена: 380 сом</p>
+                <div class="c">
+                    <button onclick="addToCart('Болоньезе', 380)">в корзину</button>
+                </div>
+            </li>
+        <li>
+                <div class="a">
+                    <img width="180px" height="130px" src="spa.jpg" alt="Спагетти">
+                </div>
+                <p>Спагетти</p>
+                <p class="price" data-price="360">Цена: 360 сом</p>
+                <div class="c">
+                    <button onclick="addToCart('Спагетти', 360)">в корзину</button>
+                </div>
+            </li>
+        <ul class="img">
+            <li>
+                <div class="a">
+                    <img width="180px" height="130px" src="krev.jpg" alt="креветки фламбе">
+                </div>
+                <p>креветки фламбе</p>
+                <p class="price" data-price="6 шт 450">Цена: 6 шт 450 сом</p>
+                <div class="c">
+                    <button onclick="addToCart('круветки фламбе', '6 шт 450')">в корзину</button>
+                </div>
+            </li>
+    </ul>
+</div>
+<div class="container">
+    <ul class="img">
+         <li>
+                <div class="a">
+                    <img width="180px" height="130px" src="shp.jpg" alt=" равиоли со шпинатом">
+                </div>
+                <p> равиоли со шпинатом</p>
+                <p class="price" data-price="350">Цена: 350 сом</p>
+                <div class="c">
+                    <button onclick="addToCart(' равиоли со шпинатом', 350)">в корзину</button>
+                </div>
+            </li>
+         <li>
+                <div class="a">
+                    <img width="180px" height="130px" src="krab.jpg" alt="равиоли с крабом
+                    ">
+                </div>
+                <p>равиоли с крабом
+                </p>
+                <p class="price" data-price="350">Цена:350 сом</p>
+                <div class="c">
+                    <button onclick="addToCart('равиоли с крабом',350)">в корзину</button>
+                </div>
+            </li>
+        <li>
+                <div class="a">
+                    <img width="180px" height="130px" src="kuri.jpg" alt="равиоли с курицей">
+                </div>
+                <p>равиоли с курицей</p>
+                <p class="price" data-price="350">Цена: 350 сом</p>
+                <div class="c">
+                    <button onclick="addToCart('равиоли с курицей', 350)">в корзину</button>
+                </div>
+            </li>
+        <ul class="img">
+            <li>
+                <div class="a">
+                    <img width="180px" height="130px" src="los.jpg" alt="равиоли с лососем">
+                </div>
+                <p>равиоли с лососем</p>
+                <p class="price" data-price="380">Цена: 380 сом</p>
+                <div class="c">
+                    <button onclick="addToCart('равиоли с лососем', 380)">в корзину</button>
+                </div>
+            </li>
+    </ul>
+</div>
+<div class="container">
+    <ul class="img">
+         <li>
+                <div class="a">
+                    <img width="180px" height="130px" src="kurp.jpg" alt=" запеченная курица с овощами и с пюре">
+                </div>
+                <p> запеченная курица с овощами и с пюре</p>
+                <p class="price" data-price="360">Цена: 360 сом</p>
+                <div class="c">
+                    <button onclick="addToCart(' запеченная курица с овощами и с пюре', 360)">в корзину</button>
+                </div>
+            </li>
+         <li>
+                <div class="a">
+                    <img width="180px" height="130px" src="kurs.jpg" alt="курица в сливочном соусе
+                    ">
+                </div>
+                <p>курица в сливочном соусе
+                </p>
+                <p class="price" data-price="380">Цена:380 сом</p>
+                <div class="c">
+                    <button onclick="addToCart('курица в сливочном соусе',380)">в корзину</button>
+                </div>
+            </li>
+        <li>
+                <div class="a">
+                    <img width="180px" height="130px" src="kurl.jpg" alt="куринный рулет">
+                </div>
+                <p>куринный рулет</p>
+                <p class="price" data-price="350">Цена: 350 сом</p>
+                <div class="c">
+                    <button onclick="addToCart('куринный рулет', 350)">в корзину</button>
+                </div>
+            </li>
+        <ul class="img">
+            <li>
+                <div class="a">
+                    <img width="180px" height="130px" src="cof.jpg" alt="фаршированная говядина">
+                </div>
+                <p>фаршированная говядина</p>
+                <p class="price" data-price="510">Цена: 510 сом</p>
+                <div class="c">
+                    <button onclick="addToCart('фаршированная говядина', 510)">в корзину</button>
+                </div>
+            </li>
+    </ul>
+</div>
+<div class="container">
+    <ul class="img">
+         <li>
+                <div class="a">
+                    <img width="180px" height="130px" src="kare.jpg" alt=" каре ягненка">
+                </div>
+                <p> каре ягненка</p>
+                <p class="price" data-price="470">Цена: 470 сом</p>
+                <div class="c">
+                    <button onclick="addToCart(' каре ягненка', 470)">в корзину</button>
+                </div>
+            </li>
+         <li>
+                <div class="a">
+                    <img width="180px" height="130px" src="zp.jpg" alt="запиченная баранина с овощами
+                    ">
+                </div>
+                <p>запиченная баранина с овощами
+                </p>
+                <p class="price" data-price="480">Цена:480 сом</p>
+                <div class="c">
+                    <button onclick="addToCart('запиченная баранина с овощами',480)">в корзину</button>
+                </div>
+            </li>
+        <li>
+                <div class="a">
+                    <img width="180px" height="130px" src="ste.jpg" alt="стейк из семги со шпинатом">
+                </div>
+                <p>стейк из семги со шпинатом</p>
+                <p class="price" data-price="600">Цена: 600 сом</p>
+                <div class="c">
+                    <button onclick="addToCart('стейк из семги со шпинатом', 600)">в корзину</button>
+                </div>
+            </li>
+        <ul class="img">
+            <li>
+                <div class="a">
+                    <img width="180px" height="130px" src="zpg.jpg" alt="запеченная говядина с овощами">
+                </div>
+                <p>запеченная говядина с овощами</p>
+                <p class="price" data-price="470">Цена: 470 сом</p>
+                <div class="c">
+                    <button onclick="addToCart('запеченная говядина с овощами', 470)">в корзину</button>
+                </div>
+            </li>
+    </ul>
+</div>
+<div class="container">
+    <ul class="img">
+         <li>
+                <div class="a">
+                    <img width="180px" height="130px" src="med.jpg" alt=" AMERICAN говяжьи медальоны">
+                </div>
+                <p> AMERICAN говяжьи медальоны</p>
+                <p class="price" data-price="680">Цена: 680 сом</p>
+                <div class="c">
+                    <button onclick="addToCart(' AMERICAN говяжьи медальоны', 680)">в корзину</button>
+                </div>
+            </li>
+         <li>
+                <div class="a">
+                    <img width="180px" height="130px" src="ant.jpg" alt="стейк АНТРИКОТ
+                    ">
+                </div>
+                <p>стейк АНТРИКОТ
+                </p>
+                <p class="price" data-price="680">Цена:680 сом</p>
+                <div class="c">
+                    <button onclick="addToCart('стейк АНТРИКОТ',680)">в корзину</button>
+                </div>
+            </li>
+        <li>
+                <div class="a">
+                    <img width="180px" height="130px" src="gs.jpg" alt="говядина с овощами">
+                </div>
+                <p>говядина с овощами</p>
+                <p class="price" data-price="360">Цена: 360 сом</p>
+                <div class="c">
+                    <button onclick="addToCart('говядина с овощами', 360)">в корзину</button>
+                </div>
+            </li>
+             <li>
+                <div class="a">
+                    <img width="180px" height="130px" src="sb.webp" alt="Садж">
+                </div>
+                <p>Садж</p>
+                <p class="price" data-price="1кг 2000">Цена: 1кг 2000 сом</p>
+                <div class="c">
+                    <button onclick="addToCart('Садж',  2000)">в корзину</button>
+                </div>
+            </li>
+        <ul class="img">
+            <li>
+                <div class="a">
+                    <img width="180px" height="130px" src="ks.jpg" alt="курица с овощами">
+                </div>
+                <p>курица с овощами</p>
+                <p class="price" data-price="320">Цена: 320 сом</p>
+                <div class="c">
+                    <button onclick="addToCart('курица с овощами', 320)">в корзину</button>
+                </div>
+            </li>
+                        <li>
+                <div class="a">
+                    <img width="180px" height="130px" src="kar.jpg" alt="фаршированная картошка с мясом">
+                </div>
+                <p>фаршированная картошка с мясом</p>
+                <p class="price" data-price="310">Цена: 310 сом</p>
+                <div class="c">
+                    <button onclick="addToCart('фаршированная картошка с мясом', 310)">в корзину</button>
+                </div>
+            </li>
+              <li>
+                <div class="a">
+                    <img width="180px" height="130px" src="bor.webp" alt="Борщ">
+                </div>
+                <p>Борщ</p>
+                <p class="price" data-price="250">Цена: 250 сом</p>
+                <div class="c">
+                    <button onclick="addToCart('борщ', 310)">в корзину</button>
+                </div>
+            </li>
+              <li>
+                <div class="a">
+                    <img width="180px" height="130px" src="bor.webp" alt="Бай табак">
+                </div>
+                <p>Бай табак</p>
+                <p class="price" data-price="1 кг 2100">Цена: 1 кг 2100 сом</p>
+                <div class="c">
+                    <button onclick="addToCart('Бай табак', 2100)">в корзину</button>
+                </div>
+            </li>
+    </ul>
+</div>
+    </ul>
+</div>
+    <!-- Навигационная панель с кнопкой открытия корзины -->
+    <header>
+        <button id="toggleCartBtn" onclick="toggleCart()">Корзина (0)</button>
+    </header>
+
+    <!-- Корзина -->
+    <div id="cart">
+        <h3>Ваша корзина</h3>
+        <ul id="cartItems"></ul>
+        <div id="cartFooter">
+            <span>Товары: <span id="cartCount">0</span></span>
+            <span>Итого: <span id="totalPrice">0</span> сом</span>
+            <button onclick="openCheckoutForm()">Оформить заказ</button>
+        </div>
+        <button class="close-cart" onclick="toggleCart()">Закрыть корзину</button>
+    </div>
+
+    <!-- Форма оформления заказа -->
+    <div id="checkoutForm" class="checkout-form">
+        <h3>Оформление заказа</h3>
+        <input type="text" id="customerName" placeholder="Ваше имя" required>
+        <input type="text" id="customerAddress" placeholder="Ваш адрес" required>
+        <input type="text" id="customerPhone" placeholder="Ваш телефон" required>
+        <button onclick="confirmOrder()">Подтвердить заказ</button>
+        <button onclick="closeCheckoutForm()">Закрыть</button>
+    </div>
+
+    <script src="script.js">
+        // Переменные для корзины
+let cartItems = {}; // Объект для хранения товаров и их количества
+
+// Функция для добавления товара в корзину
+function addToCart(name, price) {
+    if (cartItems[name]) {
+        cartItems[name].quantity++;
+    } else {
+        cartItems[name] = { price: price, quantity: 1 };
+    }
+    updateCartDisplay();
+}
+
+// Функция для обновления отображения корзины
+function updateCartDisplay() {
+    const cartItemsList = document.getElementById("cartItems");
+    cartItemsList.innerHTML = ""; // Очищаем корзину
+
+    let totalItems = 0;
+    let totalPrice = 0;
+
+    // Проходим по всем товарам в корзине
+    for (let item in cartItems) {
+        const { price, quantity } = cartItems[item];
+        totalItems += quantity;
+        totalPrice += price * quantity;
+
+        const cartItem = document.createElement("li");
+        cartItem.className = "cart-item";
+        cartItem.innerHTML = `
+            <span>${item} - ${price} сом x ${quantity}</span>
+            <button onclick="increaseQuantity('${item}')">+</button>
+            <button onclick="decreaseQuantity('${item}')">-</button>
+            <button onclick="removeItem('${item}')">Удалить</button>
+        `;
+        cartItemsList.appendChild(cartItem);
+    }
+
+    // Обновление общего количества и цены
+    document.getElementById("cartCount").textContent = totalItems;
+    document.getElementById("totalPrice").textContent = totalPrice;
+
+    // Сохраняем корзину в localStorage
+    localStorage.setItem("cart", JSON.stringify(cartItems));
+}
+
+// Увеличение количества товара
+function increaseQuantity(item) {
+    cartItems[item].quantity++;
+    updateCartDisplay();
+}
+
+// Уменьшение количества товара
+function decreaseQuantity(item) {
+    if (cartItems[item].quantity > 1) {
+        cartItems[item].quantity--;
+    } else {
+        delete cartItems[item];
+    }
+    updateCartDisplay();
+}
+
+// Удаление товара из корзины
+function removeItem(item) {
+    delete cartItems[item];
+    updateCartDisplay();
+}
+
+// Очистка корзины
+function clearCart() {
+    cartItems = {};
+    updateCartDisplay();
+    localStorage.removeItem("cart");
+}
+
+// Открытие/закрытие корзины
+function toggleCart() {
+    const cart = document.getElementById("cart");
+    cart.classList.toggle('show');
+}
+
+// Открытие формы для оформления заказа
+function openCheckoutForm() {
+    document.getElementById("checkoutForm").style.display = "block";
+}
+
+// Закрытие формы
+function closeCheckoutForm() {
+    document.getElementById("checkoutForm").style.display = "none";
+}
+
+// Подтверждение заказа и отправка через WhatsApp
+function confirmOrder() {
+    const customerName = document.getElementById("customerName").value;
+    const customerAddress = document.getElementById("customerAddress").value;
+    const customerPhone = document.getElementById("customerPhone").value;
+
+    // Проверка на пустые поля
+    if (!customerName || !customerAddress || !customerPhone) {
+        alert("Пожалуйста, заполните все поля.");
+        return;
+    }
+
+    // Формируем сообщение для WhatsApp
+    const yourWhatsAppNumber = '996507025353'; // Ваш номер
+    let orderDetails = `Здравствуйте! Хочу оформить заказ:\nИмя: ${customerName}\nАдрес: ${customerAddress}\nТелефон: ${customerPhone}\nТовары:\n`;
+
+    for (let item in cartItems) {
+        const { price, quantity } = cartItems[item];
+        orderDetails += `${item} - ${quantity} шт. x ${price} сом\n`;
+    }
+
+    orderDetails += `Итого: ${document.getElementById("totalPrice").textContent} сом`;
+
+    // Открываем WhatsApp с сообщением
+    const whatsappLink = `https://wa.me/${yourWhatsAppNumber}?text=${encodeURIComponent(orderDetails)}`;
+    window.open(whatsappLink, "_blank");
+
+    // Закрываем корзину и форму
+    closeCheckoutForm();
+    clearCart();
+}
+
+    </script>
+</body>
+</html>

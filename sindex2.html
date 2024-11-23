@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Заказ еды</title>
+    <link rel="stylesheet" type="text/css" href="style1.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        #cart {
+            border: 1px solid #ccc;
+            padding: 20px;
+            margin-bottom: 20px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+        }
+        #checkoutForm {
+            display: none; 
+            border: 1px solid #ccc; 
+            padding: 20px; 
+            background-color: #f9f9f9;
+            border-radius: 5px;
+        }
+        #checkoutForm h2, #cart h2 {
+            margin: 0 0 15px;
+        }
+        #checkoutForm label, #cart label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+        #checkoutForm input,
+        #checkoutForm textarea {
+            width: calc(100% - 10px);
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+        #checkoutForm button,
+        #cart button {
+            padding: 10px 15px;
+            margin-right: 10px;
+            border: none;
+            background-color: #28a745;
+            color: white;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+        #checkoutForm button[type="button"] {
+            background-color: #dc3545;
+        }
+           body {
+      background-image: url('i.webp'); /* Укажите путь к сохранённой картинке */
+      background-size: cover; /* Картинка занимает весь экран */
+      background-position: center; /* Центрирование картинки */
+      background-repeat: no-repeat; /* Избегаем повторения */
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+    </style>
+</head>
+<body>
+  
+
+
+<div class="tab">
+    <div class="container">
+         <ul class="img">
+         <li>
+                <div class="a">
+                    <img width="180px" height="130px" src="1.jpeg" alt="Ассорти шаурма">
+                </div>
+                <p>Ассорти шаурма</p>
+                <p class="price" data-price="200">Цена: 230 сом</p>
+                <div class="c">
+                    <button onclick="addToCart('Ассорти шаурма', 230)">в корзину</button>
+                </div>
+            </li>
+       <li>
+                <div class="a">
+                    <img width="180px" height="130px" src="4.jpeg" alt="Ассорти шаурма">
+                </div>
+                <p>шаурма с курицей</p>
+                <p class="price" data-price="200">Цена: 200 сом</p>
+                <div class="c">
+                    <button onclick="addToCart('шаурма с курицей', 200)">в корзину</button>
+                </div>
+            </li>
+        <li>
+                <div class="a">
+                    <img width="180px" height="130px" src="2.jpeg" alt="шаурма с говядиной">
+                </div>
+                <p>шаурма с говядина </p>
+                <p class="price" data-price="200">Цена: 200 сом</p>
+                <div class="c">
+                    <button onclick="addToCart('шаурма с говядиной', 200)">в корзину</button>
+                </div>
+            </li>
+        <li>
+                <div class="a">
+                    <img width="180px" height="130px" src="3.jpeg" alt="шаурма острый">
+                </div>
+                <p>шаурма острый</p>
+                <p class="price" data-price="220">Цена: 220 сом</p>
+                <div class="c">
+                    <button onclick="addToCart('шаурма острый', 220)">в корзину</button>
+                </div>
+            </li>
+    </ul>
+    </div>
+    <div class="container">
+    <ul class="img">
+        <li>
+                <div class="a">
+                    <img width="180px" height="130px" src="chiz.jpeg" alt="Чизбургер">
+                </div>
+                <p>Чизбургер</p>
+                <p class="price" data-price="210">Цена: 210 сом</p>
+                <div class="c">
+                    <button onclick="addToCart('Чизбургер', 210)">в корзину</button>
+                </div>
+            </li>
+         <li>
+                <div class="a">
+                    <img width="180px" height="130px" src="chik.jpeg" alt="Чикен бургер">
+                </div>
+                <p>Чикен бургер</p>
+                <p class="price" data-price="190">Цена: 190 сом</p>
+                <div class="c">
+                    <button onclick="addToCart('Чикен бургер', 190)">в корзину</button>
+                </div>
+            </li>
+        <li>
+                <div class="a">
+                    <img width="180px" height="130px" src="eq.jpeg" alt="EQ бургер">
+                </div>
+                <p>EQ бургер</p>
+                <p class="price" data-price="215">Цена: 215 сом</p>
+                <div class="c">
+                    <button onclick="addToCart('EQ бургер', 215)">в корзину</button>
+                </div>
+            </li>
+        <li>
+                <div class="a">
+                    <img width="180px" height="130px" src="gam.jpeg" alt="Гамбургер">
+                </div>
+                <p>Гамбургер</p>
+                <p class="price" data-price="150">Цена: 150 сом</p>
+                <div class="c">
+                    <button onclick="addToCart('Гамбургер', 150)">в корзину</button>
+                </div>
+            </li>
+
+    </ul>
+</div>
+<div class="container">
+    <ul class="img">
+         <li>
+                <div class="a">
+                    <img width="180px" height="130px" src="tvis.jpeg" alt="Шаурма твистер">
+                </div>
+                <p>Шаурма твистер</p>
+                <p class="price" data-price="240">Цена: 240 сом</p>
+                <div class="c">
+                    <button onclick="addToCart('Шаурма твистер', 240)">в корзину</button>
+                </div>
+            </li>
+         <li>
+                <div class="a">
+                    <img width="180px" height="130px" src="nag.jpeg" alt="Нагетсы">
+                </div>
+                <p>Нагетсы</p>
+                <p class="price" data-price="200">Цена: 180 сом</p>
+                <div class="c">
+                    <button onclick="addToCart('Нагетсы', 180)">в корзину</button>
+                </div>
+            </li>
+        <li>
+                <div class="a">
+                    <img width="180px" height="130px" src="cr.jpeg" alt="крылышки">
+                </div>
+                <p>крылышки</p>
+                <p class="price" data-price="250">Цена: 250 сом</p>
+                <div class="c">
+                    <button onclick="addToCart('крылышки', 250)">в корзину</button>
+                </div>
+            </li>
+        <ul class="img">
+            <li>
+                <div class="a">
+                    <img width="180px" height="130px" src="gl.jpeg" alt="Курынные ношки">
+                </div>
+                <p>Курынные ношки</p>
+                <p class="price" data-price="300">Цена: 300 сом</p>
+                <div class="c">
+                    <button onclick="addToCart('Курынные ношки', 300)">в корзину</button>
+                </div>
+            </li>
+    </ul>
+</div>
+
+   <!-- Иконка корзины с количеством товаров -->
+<div id="cartIcon" onclick="toggleCartPopup()">
+    🛒 <span id="cartCount">0</span>
+</div>
+
+<!-- Окно с содержимым корзины -->
+<div id="cartPopup" style="display: none;">
+    <h3>Корзина</h3>
+    <ul id="cartItems"></ul>
+    <p>Итоговая сумма: <span id="totalPrice">0 сом</span></p>
+    <button onclick="openCheckoutForm()">Оформить заказ</button>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

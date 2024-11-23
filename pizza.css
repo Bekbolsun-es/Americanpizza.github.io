@@ -1,0 +1,274 @@
+.tab{
+    .tab {
+    border: 1px solid black; /* Граница для таблицы */
+    border-collapse: collapse; /* Убираем двойные границы */
+    margin-left: 3%; /* Отступ слева */
+    width: 9%; /* Ширина таблицы */
+    margin-top: 5%; /* Отступ сверху */
+}
+
+.tab th, .tab td {
+    border: 1px solid black; /* Граница для ячеек */
+    padding: 0; /* Убираем отступы внутри ячеек */
+    text-align: center; /* Выравнивание текста по центру */
+    width: 180px; /* Фиксированная ширина ячеек */
+    height: 50px; /* Фиксированная высота ячеек */
+    box-sizing: border-box; /* Учитываем границы и отступы в размеры */
+    overflow: hidden; /* Скрываем переполнение */
+}
+
+/* Адаптивность для мобильных устройств */
+@media (max-width: 768px) {
+    .tab {
+        width: 100%; /* Ширина таблицы на мобильных устройствах */
+    }
+
+    .tab th, .tab td {
+        width: auto; /* Автоширина для мобильных устройств */
+        height: auto; /* Авто высота для мобильных устройств */
+    }
+}
+
+}
+select{
+    height: 40px;
+    width: 200px;
+    text-align: center;
+    color: black;
+    background-color: coral;
+}
+option {
+    width: 5px;
+}
+container {
+    margin-top: 10%;
+    height: 300px; /* Устанавливаем высоту контейнера */
+    display: flex;
+    justify-content: center;
+    align-items: flex-end; /* Выравниваем содержимое по нижнему краю */
+    border: 1px solid #ccc;
+}
+
+.img {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 20px; /* Расстояние между элементами */
+}
+
+.img li {
+    text-align: center;
+    border: solid black;
+    margin-top: 15px;
+}
+
+.c a {
+    display: inline-block;
+    padding: 8px 8px;
+    background-color: #ff6347;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 4px;
+    margin-top: 8px;
+    width: 500px;
+}
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+}
+
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 10px 20px;
+    text-align: center;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    gap: 80px;
+}
+
+nav a {
+    color: #fff;
+    text-decoration: none;
+    width: 150px;
+}
+
+.container {
+    margin: 20px auto;
+    width: 80%;
+    text-align: center;
+}
+.m{
+    width: 180px;
+    height: 150px;
+}
+.but{
+      padding: 8px 15px;
+    background-color: #FF6347;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 25px;
+
+}
+
+.img {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+.img li {
+    list-style: none;
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    width: 200px;
+    text-align: center;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+}
+
+
+
+button:hover {
+    background-color: #d9534f;
+}
+
+#cart {
+    margin-top: 30px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+#cart ul {
+    list-style: none;
+    padding: 0;
+}
+
+#cartItems li {
+    margin: 10px 0;
+}
+/* Общий стиль корзины */
+#cartItems {
+    list-style-type: none;
+    padding: 0;
+}
+
+/* Стиль для каждого элемента корзины */
+#cartItems li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+/* Стили для кнопок */
+#cartItems button {
+    margin: 0 5px;
+}
+
+/* Отображение на мобильных устройствах */
+@media (max-width: 768px) {
+    #cartItems li {
+        flex-direction: column; /* Кнопки расположены ниже текста */
+        align-items: flex-start;
+    }
+    
+    /* Кнопки немного меньше для мобильных */
+    #cartItems button {
+        padding: 5px;
+        font-size: 0.9em;
+    }
+    
+    /* Централизуем корзину на мобильных */
+    #cart {
+        padding: 10px;
+    }
+}
+
+/* Стили для компьютеров и больших экранов */
+@media (min-width: 769px) {
+    #cart {
+        max-width: 400px;
+        margin: auto;
+        padding: 20px;
+    }
+}
+
+/* Общие стили для корзины */
+#cart {
+    margin-top: 30px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 500px;
+    margin: auto;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+#cartItems {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#cartItems li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+#cartItems li span {
+    flex: 1; /* Это заставит текст занимать всю ширину */
+}
+
+#cartItems button {
+    padding: 5px 10px;
+    background-color: #FF6347;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-left: 5px;
+}
+
+#cartItems button:hover {
+    background-color: #e53e3e;
+}
+
+#cartItems button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+#totalPrice {
+    font-weight: bold;
+    font-size: 1.2em;
+    text-align: right;
+    margin-top: 20px;
+}
+
+/* Мобильная адаптивность */
+@media (max-width: 768px) {
+    #cartItems li {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    #cartItems button {
+        width: 100%;
+        margin-top: 10px;
+    }
+}

@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>2часть</title>
+    <link rel="stylesheet" type="text/css" href="style1.css">
+    <style>
+        #cart {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    width: 300px;
+    max-width: 90%;
+    max-height: 70vh; /* Ограничиваем высоту корзины, чтобы не занимала весь экран */
+    overflow-y: auto; /* Добавляем прокрутку по вертикали */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+#cartItems {
+    list-style: none;
+    padding: 0;
+}
+
+.cart-item {
+    margin-bottom: 10px;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+        body {
+            background-image: url('i.webp');
+            background-size: cover;
+            background-position: center;
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            color: #333;
+        }
+
+        /* Стили для иконки корзины */
+        #cartIcon {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            font-size: 30px;
+            cursor: pointer;
+            z-index: 1000; /* Чтобы корзина была поверх других элементов */
+            background-color: #ff5733;
+            border-radius: 50%;
+            padding: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s ease;
+        }
+
+        #cartIcon:hover {
+            background-color: #ff2a00;
+        }
+
+        /* Стили для корзины */
+        #cart {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%); /* Центрирование корзины */
+            width: 80%;
+            max-width: 500px;
+            background-color: white;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            display: none; /* Скрыта по умолчанию */
+            height: auto;
+            overflow-y: auto;
+            z-index: 999; /* Корзина будет над другими элементами */
+            opacity: 0; /* Изначально корзина прозрачная */
+            transition: opacity 0.3s ease, transform 0.3s ease; /* Плавный переход */
+        }
+
+        #cart.show {
+            display: block;
+            opacity: 1; /* Когда корзина открыта, она будет видимой */
+            transform: translate(-50%, -50%) scale(1); /* Убираем анимацию сдвига */
+        }
+
+        #cart h2 {
+            margin: 0;
+            font-size: 24px;
+            color: #ff5733;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        #cartItems {
+            list-style-type: none;
+            padding: 0;
+            margin: 20px 0;
+        }
+
+        .cart-item {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 18px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease;
+        }
+
+        .cart-item:hover {
+            background-color: #ffefdf;
+        }
+
+        .cart-item button {
+            background-color: #ff5733;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        .cart-item button:hover {
+            background-color: #ff2a00;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #ff5733;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        .close-btn:hover {
+            color: #ff2a00;
+        }
+
+        .badge {
+            background-color: red;
+            color: white;
+            border-radius: 50%;
+            padding: 5px 10px;
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            font-weight: bold;
+        }
+
+        #checkoutForm {
+            margin-top: 20px;
+            background-color: #f2f2f2;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        #checkoutForm input,
+        #checkoutForm textarea,
+        #checkoutForm button {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+
+        #checkoutForm button {
+            background-color: #ff5733;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        #checkoutForm button:hover {
+            background-color: #ff2a00;
+        }
+
+        /* Навигация */
+        nav ul.x {
+            display: flex;
+            list-style: none;
+            justify-content: center;
+            margin: 20px 0;
+            padding: 0;
+        }
+
+        nav ul.x li {
+            margin: 0 10px;
+            text-align: center;
+        }
+
+        nav ul.x li a {
+            display: block;
+            text-decoration: none;
+            color: #333;
+            font-size: 16px;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        nav ul.x li a:hover {
+            color: #ff5733;
+        }
+
+        nav ul.x li a .a {
+            display: block;
+            text-align: center;
+        }
+
+        nav ul.x li a .a img {
+            max-width: 170px;
+            transition: transform 0.3s ease;
+        }
+
+        nav ul.x li a:hover .a img {
+            transform: scale(1.1);
+        }
+
+select{
+    height: 40px;
+    width: 200px;
+    text-align: center;
+    color: black;
+    background-color: coral;
+}
+option {
+    width: 5px;
+}
+  body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 2000px; /* Для демонстрации прокрутки */
+            background-color: #f4f4f4;
+        }
+
+        /* Стили для кнопки */
+        .fixed-button {
+            position: fixed;  /* Фиксированное позиционирование */
+            left: 5px;  /* Расстояние от левого края */
+            top: 19%; /* Центрирует кнопку по вертикали */
+            transform: translateY(-50%); /* Чтобы кнопка была точно по центру */
+            background-color: #007bff;
+            color: white;
+            padding: 8px 12px;
+            font-size: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow:  5px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000; /* Чтобы кнопка была поверх других элементов */
+        }
+
+        /* Стили при наведении на кнопку */
+        .fixed-button:hover {
+            background-color: #0056b3;
+        }
+        /* Стили для формы оформления заказа */
+.checkout-form {
+    display: none;  /* Скрыта по умолчанию */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);  /* Центрируем форму */
+    width: 400px;
+    background-color: white;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    overflow: auto;
+    max-height: 80%;
+    border-radius: 8px;
+}
+
+/* Стили для кнопки закрытия формы */
+.checkout-form .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+/* При показе формы */
+.checkout-form.show {
+    display: block;
+}
+
+/* Затемнение фона при открытии формы */
+.checkout-form::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: -1;
+}
+/* Задний фон при открытии формы */
+.checkout-overlay {
+    display: none;  /* Скрыта по умолчанию */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6); /* Затемненный фон */
+    z-index: 999;
+}
+
+/* Центрированная форма */
+.checkout-form {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    background-color: white;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+/* Кнопка закрытия формы */
+.checkout-form .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+
+    </style>
+</head>
+<body>
+    <nav>
+        <ul class="x">
+            <li>
+                <a href="gb.html" class="z">
+                    <div class="a">
+                        <img src="mm/12.jpeg" alt="Горячие Блюда">
+                        <p>Горячие Блюда</p>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a href="pizza.html" class="z">
+                    <div class="a">
+                        <img src="mm/10.jpeg" alt="Пиццы">
+                        <p>Пиццы</p>
+                    </div>
+                </a>
+            </li>
+        </ul><ul class="x">
+            <li>
+                <a href="lavaz.html" class="z">
+                    <div class="a">
+                        <img src="mm/11.jpeg" alt="Фст-фуды">
+                        <p>Фст-фуды</p>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a href="sushi.html" class="z">
+                    <div class="a">
+                        <img src="mm/13.jpeg" alt="Роллы">
+                        <p>Роллы</p>
+                    </div>
+                </a>
+            </li>
+            </ul>
+<ul class="x">
+            <li>
+                <a href="nap.html" class="z">
+                    <div class="a">
+                        <img src="mm/nap.jpeg" alt="Напитки">
+                        <p>Напитки</p>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a href="sal.html" class="z">
+                    <div class="a">
+                        <img src="mm/sal.jpg" alt="Салаты">
+                        <p>Салаты</p>
+                    </div>
+                </a>
+            </li>
+        </ul>
+        <ul class="x">
+            <li>
+                <a href="bar.html" class="z">
+                    <div class="a">
+                        <img src="mm/sm.jpeg" alt="Барное меню">
+                        <p>Барное меню</p>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a href="bar1.html" class="z">
+                    <div class="a">
+                        <img src="mm/blin.jpeg" alt="Завтраки">
+                        <p>Завтраки</p>
+                    </div>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Иконка корзины -->
+    <div id="cartIcon" onclick="toggleCart()">
+        🛒
+        <span class="badge" id="cartCount">0</span>
+    </div>
+
+    <!-- Контейнер корзины -->
+    <div id="cart">
+        <span class="close-btn" onclick="toggleCart()">×</span>
+        <h2>Корзина</h2>
+        <ul id="cartItems"></ul>
+        <p>Итого: <span id="totalPrice">0</span> сом</p>
+        <button onclick="openCheckoutForm()"class="but">Оформить заказ</button>
+        <button onclick="clearCart()"class="but">Очистить корзину</button>
+
+        <!-- Форма для оформления заказа -->
+        <div id="checkoutForm" style="display: none;">
+            <h2>Оформить заказ</h2>
+            <form id="checkoutFormContent">
+                <label for="name">Ваше имя:</label>
+                <input type="text" id="name" name="name" required>
+
+                <label for="address">Адрес доставки:</label>
+                <input type="text" id="address" name="address" required>
+
+                <label for="phone">Телефон:</label>
+                <input type="text" id="phone" name="phone" required>
+
+                <label for="comment">Комментарий:</label>
+                <textarea id="comment" name="comment"></textarea>
+
+                <button type="submit"class="but">Подтвердить заказ</button>
+            </form>
+        </div>
+    </div>
+
+       <script>
+        // Переменные для корзины
+        let cartItems = {}; // Объект для хранения товаров и их количества
+
+        // Функция обновления отображения корзины
+        function updateCartDisplay() {
+            const cartItemsList = document.getElementById("cartItems");
+            cartItemsList.innerHTML = ""; // Очищаем корзину
+
+            let totalItems = 0;
+            let totalPrice = 0;
+
+            // Проходим по всем товарам в корзине
+            for (let item in cartItems) {
+                const { price, quantity } = cartItems[item];
+                totalItems += quantity;
+                totalPrice += price * quantity;
+
+                const cartItem = document.createElement("li");
+                cartItem.className = "cart-item";
+                cartItem.innerHTML = `
+                    <span>${item} - ${price} сом x ${quantity}</span>
+                    <button onclick="increaseQuantity('${item}')">+</button>
+                    <button onclick="decreaseQuantity('${item}')">-</button>
+                    <button onclick="removeItem('${item}')">Удалить</button>
+                `;
+                cartItemsList.appendChild(cartItem);
+            }
+
+            // Обновление общего количества и цены
+            document.getElementById("cartCount").textContent = totalItems;
+            document.getElementById("totalPrice").textContent = totalPrice;
+
+            // Сохраняем корзину в localStorage
+            localStorage.setItem("cart", JSON.stringify(cartItems));
+        }
+
+        // Функция добавления товара в корзину
+        function addToCartFromSelect(variantId, name) {
+            const selectElement = document.getElementById(variantId);
+            const selectedOption = selectElement.options[selectElement.selectedIndex];
+            const price = parseInt(selectedOption.value);
+
+            // Добавление товара в корзину
+            if (cartItems[name]) {
+                cartItems[name].quantity++;
+            } else {
+                cartItems[name] = { price: price, quantity: 1 };
+            }
+
+            updateCartDisplay();
+        }
+
+        // Увеличение количества товара
+        function increaseQuantity(item) {
+            cartItems[item].quantity++;
+            updateCartDisplay();
+        }
+
+        // Уменьшение количества товара
+        function decreaseQuantity(item) {
+            if (cartItems[item].quantity > 1) {
+                cartItems[item].quantity--;
+            } else {
+                delete cartItems[item];
+            }
+            updateCartDisplay();
+        }
+
+        // Удаление товара из корзины
+        function removeItem(item) {
+            delete cartItems[item];
+            updateCartDisplay();
+        }
+
+        // Очистка корзины
+        function clearCart() {
+            cartItems = {};
+            updateCartDisplay();
+            localStorage.removeItem("cart");
+        }
+
+        // Открытие/закрытие корзины
+        function toggleCart() {
+            const cart = document.getElementById("cart");
+            cart.classList.toggle('show'); // Прикрепляем класс show, чтобы показать корзину
+        }
+
+        // Загрузка корзины из localStorage при загрузке страницы
+        window.onload = function() {
+            const savedCart = localStorage.getItem("cart");
+            if (savedCart) {
+                cartItems = JSON.parse(savedCart);
+                updateCartDisplay();
+            }
+        };
+
+        // Открытие формы для оформления заказа
+        function openCheckoutForm() {
+            const checkoutForm = document.getElementById("checkoutForm");
+            checkoutForm.style.display = "block";
+        }
+
+        // Закрытие формы для оформления заказа
+        function closeCheckoutForm() {
+            const checkoutForm = document.getElementById("checkoutForm");
+            checkoutForm.style.display = "none";
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,66 @@
+body {
+    border: 5 solid black;
+    margin: 1200px;
+    padding: 0;
+    height: 800px;
+}
+
+header {
+    text-align: center; /* Центрируем заголовок */
+}
+
+.x {
+    list-style-type: none; /* Убираем маркеры списка */
+    padding: 0;
+    display: flex; /* Используем flexbox для горизонтального расположения */
+    justify-content: center; /* Центрируем элементы */
+}
+
+.x li {
+    margin: 0 10px; /* Отступы между элементами */
+}
+
+.a {
+    position: relative;
+    width: 180px; /* Ширина контейнера */
+    height: 130px; /* Высота контейнера */
+}
+
+.a img {
+    width: 100%; /* Устанавливаем ширину изображения на 100% */
+    height: 100%; /* Устанавливаем высоту изображения на 100% */
+    object-fit: cover; /* Обрезаем изображение, чтобы оно заполнило контейнер */
+}
+
+.a p {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    color: white; /* Цвет текста */
+    background-color: rgba(0, 0, 0, 0.5); /* Полупрозрачный фон */
+    padding: 5px;
+    margin: 0;
+}
+.clav{
+    position: relative;
+    width: 100%;
+   overflow: hidden;
+}
+.clav1{
+    display: flex;
+    width: 300%;
+    transition: transform 0.5s;
+}
+.clav2{
+    flex: 1;
+    text-align: center;
+
+}
+.clav2 img{
+    width: 100%;
+    max-height: 400px;
+    object-fit: cover;
+}
+.b{
+    color: white;
+}
